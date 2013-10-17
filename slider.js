@@ -22,7 +22,7 @@
     
         //Get this slider
         var slider = $(element);
-        slider.addClass('paraSlider');
+        slider.addClass('paraslider');
 
         //Find our slider children
         var list = slider.find('ul');
@@ -89,29 +89,51 @@
                     var newLeft = currentLeft + sliderWidth;
                     var currentSlideIndex = vars.currentSlide;
                     var nextSlideIndex = ( currentSlideIndex - 1 === 0 ) ? vars.totalSlides : currentSlideIndex - 1;
+                    var currentImg = $('.img-' + currentSlideIndex);
+                    var nextImg = $('.img-' + nextSlideIndex);
+                    var startPos = rightPos;
+                    var endPos = leftPos;
+                
+                } else {
 
-                    //console.log( 'currentSlide: ' + currentSlideIndex );
-                    //console.log( 'nextSlideIndex: ' + nextSlideIndex );
+                    var newLeft = currentLeft - sliderWidth;
+                    var currentSlideIndex = vars.currentSlide;
+                    var nextSlideIndex = ( currentSlideIndex + 1 > vars.totalSlides ) ? 1 : currentSlideIndex + 1;
+                    var currentImg = $('.img-' + currentSlideIndex);
+                    var nextImg = $('.img-' + nextSlideIndex);
+                    var startPos = leftPos;
+                    var endPos = rightPos;
 
-                    // move the next image to the right position, ready to animate to the centre
-                    $('.img-' + nextSlideIndex).css({
-                        left: rightPos
-                    });
-
-                    // animate the next image into the centre of its parent list item
-                    $('.img-' + nextSlideIndex).animate({
-                        left: middlePos
-                    }, settings.animSpeed);
+                } 
                     
-                    // animate the current image to the left of its parent while its moving out 
-                    $('.img-' + currentSlideIndex).animate({
-                        left: leftPos
-                    }, settings.animSpeed);
+                // move the next image to the right position, ready to animate to the centre
+                nextImg.css({
+                    left: startPos
+                });
 
-                    // animate the next list item into view
-                    list.animate({
-                        left: newLeft
-                    }, settings.animSpeed, function() {
+                // animate the next image into the centre of its parent list item
+                nextImg.animate({
+                    left: middlePos
+                }, settings.animSpeed);
+                
+                // if using the blur setting, blur the outgoing image and unblur the incoming one
+                if ( settings.blurImages ) {
+                    currentImg.addClass('blur');
+                    nextImg.removeClass('blur');
+                }
+
+                // animate the current image to the left of its parent while its moving out 
+                currentImg.animate({
+                    left: endPos
+                }, settings.animSpeed);
+
+                // animate the next list item into view
+                list.animate({
+                    left: newLeft
+                }, settings.animSpeed, function() {
+
+                    if ( direction === 'prev') {
+
                         // decrease current slide number by 1
                         vars.currentSlide -= 1;
 
@@ -122,37 +144,9 @@
                             vars.currentSlide = vars.totalSlides;
 
                         }
-                        vars.animating = false;
-                    });
 
+                    } else {
 
-                } else {
-                    
-                    var newLeft = currentLeft - sliderWidth;
-                    var currentSlideIndex = vars.currentSlide;
-                    var nextSlideIndex = ( currentSlideIndex + 1 > vars.totalSlides ) ? 1 : currentSlideIndex + 1;
-
-                    //console.log( 'currentSlide: ' + currentSlideIndex );
-
-                    // move the next image to the left position, ready to animate to the centre
-                    $('.img-' + nextSlideIndex).css({
-                        left: leftPos
-                    });
-
-                    // animate the current image to the right of its parent
-                    $('.img-' + currentSlideIndex).animate({
-                        left: rightPos
-                    }, settings.animSpeed);
-
-                    // animate the next image into the centre of its parent list item
-                    $('.img-' + nextSlideIndex).animate({
-                        left: middlePos
-                    }, settings.animSpeed);
-
-                    // animate the next list item into view
-                    list.animate({
-                        left: newLeft
-                    }, settings.animSpeed, function() {
                         // increase current slide number by 1
                         vars.currentSlide += 1;
 
@@ -163,16 +157,18 @@
                             vars.currentSlide = 1;
 
                         }
-                        vars.animating = false;
-                    });
-                }
+                    }
+                    vars.animating = false;
+                });
+               
             }
         }
 
         var navClick = function(e) {
-            
+            if(vars.animating) return false;
+            clearInterval(timer);
+            timer = '';
             changeSlide( e.target.id );
-            
             e.preventDefault();
         }
         
@@ -221,6 +217,12 @@
         // add event listener to navigation buttons
         $(document).on('click', '.nav-btn', navClick);
 
+        if ( settings.scaleOnHover ) {
+            $('img').hover(function(){
+                $(this).toggleClass('big');
+            });
+        }
+
         return this;
     }
 
@@ -246,7 +248,9 @@
         pauseTime: 3000,
         keyboardNav: true,
         pauseOnHover: true,
-        manualAdvance: false
+        manualAdvance: false,
+        scaleOnHover: true,
+        blurImages: true
     };
  
 })( jQuery, window, document );

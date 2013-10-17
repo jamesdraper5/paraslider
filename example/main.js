@@ -1,10 +1,7 @@
 $(function() {
 	$('#slider').paraSlider({
-		widthDifference: 200,
-        animSpeed: 600,
-        pauseTime: 700,
-        keyboardNav: false,
-        pauseOnHover: true,
-        manualAdvance: false
+		widthDifference: 400,
+        animSpeed: 3000,
+        pauseTime: 4000
 	});
 });

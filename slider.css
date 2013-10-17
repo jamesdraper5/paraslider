@@ -1,18 +1,9 @@
-.paraSlider {
+.paraslider {
 	overflow: hidden;
 	position: relative;
-	margin: 20px auto;
-	width: 600px;
-	height: 400px;
-	/*
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	border: 2px solid black;
-	*/
 }
 
-.paraSlider ul {
+.paraslider ul {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -22,7 +13,7 @@
 	padding: 0;
 }
 
-.paraSlider ul li {
+.paraslider ul li {
 	position: relative;
 	float: left;
 	margin: 0;	
@@ -33,18 +24,17 @@
 	box-sizing: border-box;
 }
 
-.paraSlider ul li img {
+.paraslider ul li img {
 	position: absolute;
 	top: 0;
 	margin: 0;
-	-webkit-transition: -webkit-transform 0.8s ease-in;
+	-webkit-transition: -webkit-transform 0.8s ease-in, -webkit-filter .5s ease-in;
 	-moz-transition: -moz-transform 0.8s ease-in;
 	-ms-transition: -ms-transform 0.8s ease-in;
 	-o-transition: -o-transform 0.8s ease-in;
 	transition: transform 0.8s ease-in;
 }
-.paraSlider ul li img:hover {
-	
+.paraslider ul li img.big {
 	-webkit-transform: scale(1.02);
  	   -moz-transform: scale(1.02);
   	    -ms-transform: scale(1.02);
@@ -52,7 +42,11 @@
   	       transform:  scale(1.02);	
 }
 
-.paraSlider ul li p {
+.paraslider ul li img.blur {
+	-webkit-filter: blur(2px);
+}
+
+.paraslider ul li p {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -61,7 +55,7 @@
 	color: white;
 	padding: 10px;
 	margin: 0;
-	font-family: 'HelveticaNeue-Light';
+	font-family: 'HelveticaNeue-Light', Helvetica, Arial, sans-serif;
 	border-top: 1px solid #2980b9;
 }
 
