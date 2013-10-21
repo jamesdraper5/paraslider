@@ -19,13 +19,13 @@ $('#slider').paraSlider({
 });
 ```
 
-`animSpeed`: this is the time (in milliseconds) it takes to animate fully from one slide to the next. (Default: 2000)
-`pauseTime`: if the slider is set to run automatically, this is the time in milliseconds between each animation. Note that the animSpeed setting above will eat into this time, so if animSpeed and pauseTime are equal, there will be no pause between slides. (Default: 4000)
-`manualAdvance`: set this to true if you want the slider to auto run. (Defult: false)
-`useNavbuttons`: this toggles whether or not there are buttons to control the slider (Default: true)
-`keyboardNav`: use this to decide if the left and right keyboard buttons control the slider (Default: true)
-`pauseOnHover`: if this is true, then the slider will stop running when you hover over the slider (Default: true)
-`scaleOnHover`: this creates a subtle zoom effect on the image when you hover over it (Default: true)
+`animSpeed`: this is the time (in milliseconds) it takes to animate fully from one slide to the next. (Default: 2000)  
+`pauseTime`: if the slider is set to run automatically, this is the time in milliseconds between each animation. Note that the animSpeed setting above will eat into this time, so if animSpeed and pauseTime are equal, there will be no pause between slides. (Default: 4000)  
+`manualAdvance`: set this to true if you want the slider to auto run. (Defult: false)  
+`useNavbuttons`: this toggles whether or not there are buttons to control the slider (Default: true)  
+`keyboardNav`: use this to decide if the left and right keyboard buttons control the slider (Default: true)  
+`pauseOnHover`: if this is true, then the slider will stop running when you hover over the slider (Default: true)  
+`scaleOnHover`: this creates a subtle zoom effect on the image when you hover over it (Default: true)  
 `blurImages`: this gradually blurs the images while they are animating out of the slider. This is currently only available on Google Chrome as it is the only browser that supports this blur filter. (Default: true)
 
 ## Author
