@@ -9,6 +9,7 @@
 ;(function ( $, window, document, undefined ) {
     
     var ParaSlider = function(element, options){
+
         //Defaults are below
         var settings = $.extend({}, $.fn.paraSlider.defaults, options);
 
@@ -38,12 +39,10 @@
         firstSlideCopy.appendTo(list);
 
         // set up the vars for slide animation
-        var sliderWidth = slider.width();
+        var sliderWidth = slider.width(); // 600
         var sliderHeight = slider.height();
-        var leftPos = -settings.widthDifference + 'px';
-        var middlePos = -settings.widthDifference/2 + 'px';
-        var rightPos = 0;
         var listItems = list.children('li');
+        var imgVars = [];
         
         // resize slides and position them
         listItems.each(function( index ) {
@@ -53,7 +52,15 @@
 
             var img = $this.find('img:first');
             var imgClass;
+            var imgWidth = img.width();
+            if ( imgWidth == 0 ) { imgWidth = img.attr('width'); }
 
+            // array of objects containing image animation info
+            imgVars[index] = {};
+            imgVars[index].midPoint = (imgWidth - sliderWidth) / -2; // -100
+            imgVars[index].leftPoint = imgVars[index].midPoint + imgVars[index].midPoint; // -180
+            imgVars[index].rightPoint = imgVars[index].midPoint - imgVars[index].midPoint; // -20
+            
             if ( index === 0 ) {
                 imgClass = listItems.length - 2;
             } else if ( index === listItems.length - 1 ) {
@@ -68,7 +75,7 @@
 
             // set the first image in the middle
             if ( index === 1 ) {
-                img.css({ 'left': middlePos }); 
+                img.css({ 'left': imgVars[index].midPoint }); 
             } 
 
         });
@@ -91,8 +98,9 @@
                     var nextSlideIndex = ( currentSlideIndex - 1 === 0 ) ? vars.totalSlides : currentSlideIndex - 1;
                     var currentImg = $('.img-' + currentSlideIndex);
                     var nextImg = $('.img-' + nextSlideIndex);
-                    var startPos = rightPos;
-                    var endPos = leftPos;
+                    var startPos = imgVars[nextSlideIndex].rightPoint
+                    var endPos = imgVars[currentSlideIndex].leftPoint
+                    var middlePos = imgVars[nextSlideIndex].midPoint
                 
                 } else {
 
@@ -101,8 +109,9 @@
                     var nextSlideIndex = ( currentSlideIndex + 1 > vars.totalSlides ) ? 1 : currentSlideIndex + 1;
                     var currentImg = $('.img-' + currentSlideIndex);
                     var nextImg = $('.img-' + nextSlideIndex);
-                    var startPos = leftPos;
-                    var endPos = rightPos;
+                    var startPos = imgVars[nextSlideIndex].leftPoint
+                    var endPos = imgVars[currentSlideIndex].rightPoint
+                    var middlePos = imgVars[nextSlideIndex].midPoint
 
                 } 
                     
@@ -132,17 +141,15 @@
                     left: newLeft
                 }, settings.animSpeed, function() {
 
-                    if ( direction === 'prev') {
+                    if ( direction === 'prev' ) {
 
                         // decrease current slide number by 1
                         vars.currentSlide -= 1;
 
                         // if you land on the first placeholder img replace it with the last image 
                         if ( vars.currentSlide === 0 ) {
-
                             list.css({ left: (vars.totalSlides) * -sliderWidth });
                             vars.currentSlide = vars.totalSlides;
-
                         }
 
                     } else {
@@ -152,10 +159,8 @@
 
                         // if you land on the last placeholder img replace it with the first image 
                         if ( vars.currentSlide > vars.totalSlides ) {
-
                             list.css({ left: -sliderWidth });
                             vars.currentSlide = 1;
-
                         }
                     }
                     vars.animating = false;
@@ -164,63 +169,84 @@
             }
         }
 
+        // nav button function
         var navClick = function(e) {
             if(vars.animating) return false;
             clearInterval(timer);
             timer = '';
-            changeSlide( e.target.id );
+            changeSlide( $(e.target).attr('data-dir') );
             e.preventDefault();
         }
         
-        //Keyboard Navigation
-        if(settings.keyboardNav){
-            $(window).keydown(function(event){
+        // use navigation buttons
+        if ( settings.useNavButtons ) {
+
+            // add event listener to navigation buttons
+            $(document).on('click', '.nav-btn', navClick);
+
+            // add and position slider buttons
+            var sliderBtns = '<div class="slider-btns">' +
+                '<a href="#" class="nav-btn prev icon-arrow-left" data-dir="prev"></a>' +
+                '<a href="#" class="nav-btn next icon-arrow-right" data-dir="next"></a>' +
+                '</div>';
+            slider.after(sliderBtns);
+            $('.slider-btns').css({
+                width: sliderWidth + 160,
+                marginTop: -((sliderHeight / 2) + 60)
+            });
+        }
+
+        // keyboard navigation 
+        if ( settings.keyboardNav ) {
+            $(window).keydown(function(e) {
+
                 //Left
-                if(event.keyCode == '37'){
-                    if(vars.animating) return false;
+                if ( e.keyCode == '37' ) {
+                    if ( vars.animating ) { return false; }
                     clearInterval(timer);
                     timer = '';
                     changeSlide('prev');
                 }
+
                 //Right
-                if(event.keyCode == '39'){
-                    if(vars.animating) return false;
+                if ( e.keyCode == '39' ) {
+                    if ( vars.animating ) { return false; }
                     clearInterval(timer);
                     timer = '';
                     changeSlide('next');
                 }
             });
         }
-        
-        //For pauseOnHover setting
-        if(settings.pauseOnHover){
-            slider.hover(function(){
+         
+        // pause on hover setting
+        if ( settings.pauseOnHover ) {
+            slider.hover(function() {
                 vars.paused = true;
                 clearInterval(timer);
                 timer = '';
-            }, function(){
+            }, function() {
                 vars.paused = false;
+
                 //Restart the timer
-                if(timer == '' && !settings.manualAdvance){
+                if ( timer == '' && !settings.manualAdvance ) {
                     timer = setInterval(function() { changeSlide('next'); }, settings.pauseTime);
                 }
             });
         }
 
-        // Initialize the slider if it runs automatically
-        var timer = 0;
-        if(!settings.manualAdvance && listItems.length > 1){
-            // auto run the slider
-            timer = setInterval(function() { changeSlide('next'); }, settings.pauseTime);
-        }
-
-        // add event listener to navigation buttons
-        $(document).on('click', '.nav-btn', navClick);
-
+        // zoom image on hover
         if ( settings.scaleOnHover ) {
-            $('img').hover(function(){
+            $('img').hover(function() {
                 $(this).toggleClass('big');
             });
+        }
+
+        // Initialize the slider if it runs automatically
+        var timer = 0;
+        if ( !settings.manualAdvance && listItems.length > 1 ) {
+            
+            // auto run the slider
+            timer = setInterval(function() { changeSlide('next'); }, settings.pauseTime);
         }
 
         return this;
@@ -229,7 +255,7 @@
 
     $.fn.paraSlider = function( options )  {
  
-        return this.each(function(key, value){
+        return this.each(function(key, value) {
             var element = $(this);
             // Return early if this element already has a plugin instance
             if (element.data('paraslider')) return element.data('paraslider');
@@ -243,12 +269,12 @@
 
     //Default settings
     $.fn.paraSlider.defaults = {
-        widthDifference: 200,
         animSpeed: 1200,
         pauseTime: 3000,
+        manualAdvance: false,
+        useNavButtons: true,
         keyboardNav: true,
         pauseOnHover: true,
-        manualAdvance: false,
         scaleOnHover: true,
         blurImages: true
     };

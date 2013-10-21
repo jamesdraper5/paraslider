@@ -28,12 +28,14 @@
 	position: absolute;
 	top: 0;
 	margin: 0;
+	width: 1000px;
 	-webkit-transition: -webkit-transform 0.8s ease-in, -webkit-filter .5s ease-in;
 	-moz-transition: -moz-transform 0.8s ease-in;
 	-ms-transition: -ms-transform 0.8s ease-in;
 	-o-transition: -o-transform 0.8s ease-in;
 	transition: transform 0.8s ease-in;
 }
+
 .paraslider ul li img.big {
 	-webkit-transform: scale(1.02);
  	   -moz-transform: scale(1.02);
@@ -59,30 +61,41 @@
 	border-top: 1px solid #2980b9;
 }
 
-#btns {
-	margin: -260px auto;
-	text-align: center;
+.slider-btns {
+	margin: 0 auto;
 	position: relative;
-	background-color: red;
-	width: 760px;
 }
 
-#prev {
+.prev {
 	position: absolute;
 	left: 0;
 	top: 0;
 }
-#next {
+.prev:before {
+	content: "\30";
+}
+
+.next {
 	position: absolute;
 	right: 0;
 	top: 0;
 }
+.next:before {
+	content: "\31";
+}
 
 .nav-btn {
+	font-family: 'icomoon';
+	speak: none;
+	font-size: 70px;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
 	text-decoration: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
 	color: #333;
-	font-size: 4em;
-	line-height: 1em;
 	opacity: 0.3;
 	transition: all 0.5s linear;
 }
@@ -102,63 +115,3 @@
 	font-style: normal;
 }
 
-/* Use the following CSS code if you want to use data attributes for inserting your icons */
-[data-icon]:before {
-	font-family: 'icomoon';
-	content: attr(data-icon);
-	speak: none;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-/* Use the following CSS code if you want to have a class per icon */
-/*
-Instead of a list of all class selectors,
-you can use the generic selector below, but it's slower:
-[class*="icon-"] {
-*/
-.icon-arrow-left, .icon-arrow-right, .icon-arrow-left-2, .icon-arrow-right-2,  .icon-arrow-left-3, .icon-arrow-right-3,  .icon-circle-arrow-left, .icon-circle-arrow-right, .icon-caret-left, .icon-caret-right {
-	font-family: 'icomoon';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	color: #333;
-}
-.icon-arrow-left:before {
-	content: "\30";
-}
-.icon-arrow-right:before {
-	content: "\31";
-}
-.icon-arrow-right-2:before {
-	content: "\32";
-}
-.icon-arrow-left-2:before {
-	content: "\33";
-}
-.icon-arrow-right-3:before {
-	content: "\34";
-}
-.icon-arrow-left-3:before {
-	content: "\35";
-}
-.icon-circle-arrow-right:before {
-	content: "\36";
-}
-.icon-circle-arrow-left:before {
-	content: "\37";
-}
-.icon-caret-right:before {
-	content: "\38";
-}
-.icon-caret-left:before {
-	content: "\39";
-}
