@@ -39,7 +39,7 @@
         firstSlideCopy.appendTo(list);
 
         // set up the vars for slide animation
-        var sliderWidth = slider.width(); // 600
+        var sliderWidth = slider.width(); 
         var sliderHeight = slider.height();
         var listItems = list.children('li');
         var imgVars = [];
@@ -57,9 +57,9 @@
 
             // array of objects containing image animation info
             imgVars[index] = {};
-            imgVars[index].midPoint = (imgWidth - sliderWidth) / -2; // -100
-            imgVars[index].leftPoint = imgVars[index].midPoint + imgVars[index].midPoint; // -180
-            imgVars[index].rightPoint = imgVars[index].midPoint - imgVars[index].midPoint; // -20
+            imgVars[index].midPoint = (imgWidth - sliderWidth) / -2; 
+            imgVars[index].leftPoint = imgVars[index].midPoint + imgVars[index].midPoint; 
+            imgVars[index].rightPoint = imgVars[index].midPoint - imgVars[index].midPoint;
             
             if ( index === 0 ) {
                 imgClass = listItems.length - 2;
@@ -269,8 +269,8 @@
 
     //Default settings
     $.fn.paraSlider.defaults = {
-        animSpeed: 1200,
-        pauseTime: 3000,
+        animSpeed: 2000,
+        pauseTime: 4000,
         manualAdvance: false,
         useNavButtons: true,
         keyboardNav: true,

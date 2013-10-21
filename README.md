@@ -4,6 +4,23 @@ ParaSlider is a simple slider which creates a parallax effect while transitionin
 
 ## Usage
 
+To use the slider, simply add the slider.js and slider.css files to your project along with the fonts folder for the slider buttons. The structure of your HTML should then be like so:
+
+```
+<div id="slider">
+	<ul>
+		<li>
+			<img src="path/to/image" alt="img 1">
+			<p>This is slide 1</p>
+		</li>
+		<li>
+			<img src="path/to/image" alt="img 2">
+			<p>This is slide 2</p>
+		</li>
+	</ul>
+</div>
+```
+
 A working sample can be seen in the example folder, but here's a quick run down on each of the options:
 
 ```
