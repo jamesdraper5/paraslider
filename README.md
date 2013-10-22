@@ -45,6 +45,10 @@ $('#slider').paraSlider({
 `scaleOnHover`: this creates a subtle zoom effect on the image when you hover over it (Default: true)  
 `blurImages`: this gradually blurs the images while they are animating out of the slider. This is currently only available on Google Chrome as it is the only browser that supports this blur filter. (Default: true)
 
+## Demo
+
++ [http://www.jamesdraper.info/samples/jquery-parallax-slider](http://www.jamesdraper.info/samples/jquery-parallax-slider)
+
 ## Author
 
 **James Draper**
