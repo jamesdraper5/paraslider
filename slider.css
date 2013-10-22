@@ -29,6 +29,7 @@
 	top: 0;
 	margin: 0;
 	width: 1000px;
+	max-width: none;
 	-webkit-transition: -webkit-transform 0.8s ease-in, -webkit-filter .5s ease-in;
 	-moz-transition: -moz-transform 0.8s ease-in;
 	-ms-transition: -ms-transform 0.8s ease-in;
@@ -53,7 +54,7 @@
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	background-color: rgba(0, 0, 0, 0.75);
+	background-color: rgba(0, 0, 0, 0.7);
 	color: white;
 	padding: 10px;
 	margin: 0;
@@ -100,7 +101,9 @@
 	transition: all 0.5s linear;
 }
 .nav-btn:hover {
+	color: #333;
 	opacity: 1;
+	text-decoration: none;
 }
 
 /******************** Icon Font for slider nav *************************/

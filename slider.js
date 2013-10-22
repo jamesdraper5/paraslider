@@ -186,13 +186,15 @@
 
             // add and position slider buttons
             var sliderBtns = '<div class="slider-btns">' +
-                '<a href="#" class="nav-btn prev icon-arrow-left" data-dir="prev"></a>' +
-                '<a href="#" class="nav-btn next icon-arrow-right" data-dir="next"></a>' +
+                '<a href="#" class="nav-btn prev" data-dir="prev"></a>' +
+                '<a href="#" class="nav-btn next" data-dir="next"></a>' +
                 '</div>';
             slider.after(sliderBtns);
             $('.slider-btns').css({
                 width: sliderWidth + 160,
-                marginTop: -((sliderHeight / 2) + 60)
+                marginTop: -((sliderHeight / 2) + 60),
+                paddingTop: (sliderHeight / 2) + 60
+
             });
         }
 
