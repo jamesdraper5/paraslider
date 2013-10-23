@@ -23,7 +23,9 @@
     
         //Get this slider
         var slider = $(element);
-        slider.addClass('paraslider');
+
+        // hide the slider while setting it up
+        slider.addClass('paraslider').hide();
 
         //Find our slider children
         var list = slider.find('ul');
@@ -82,6 +84,9 @@
 
         // position the slider in correct start position
         list.css({ left: -sliderWidth });
+
+        // show the slider once it is ready
+        slider.show();
 
         // this is the main function which animates the slides
         var changeSlide = function( direction ) {
